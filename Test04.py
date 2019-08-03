@@ -1,6 +1,7 @@
 import pandas as pd 
 import requests
 from bs4 import BeautifulSoup
+import lxml.etree
 import pdb
 
 
@@ -14,17 +15,12 @@ response = requests.get(
             )
         
 html = response.content
-html = str(html, 'utf-8')   
+html = str(html, 'utf-8')       
 
-tables = pd.read_html(html)
-print(tables[0])
-print(tables[1])     
+html = lxml.etree.HTML(html) 
 
-soup = BeautifulSoup(html, 'html.parser')
-name = soup.select('div > h1')[0].text
-print(name)
-
-#tables = pd.read_html(html)
-
+xpath = html.xpath('//span[@data-reactid="37"]')
 pdb.set_trace()
+print(lxml.etree.tostring(element))
+
 
